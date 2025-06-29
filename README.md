@@ -32,62 +32,77 @@ npm install haxball.js
 #### Module Usage Example
 
 ```js
-const HaxballJS = require('haxball.js');
+const { HBInit } = require('haxball.js');
 
-HaxballJS().then((HBInit) => {
-  // Same as in Haxball Headless Host Documentation
-  const room = HBInit({
-    roomName: 'Haxball.JS',
-    maxPlayers: 16,
-    public: true,
-    noPlayer: true,
-    token: 'YOUR_TOKEN_HERE', // Required
-  });
-
-  room.setDefaultStadium('Big');
-  room.setScoreLimit(5);
-  room.setTimeLimit(0);
-
-  room.onRoomLink = function (link) {
-    console.log(link);
-  };
+const room = await HBInit({
+  roomName: 'Haxball.JS',
+  maxPlayers: 16,
+  public: true,
+  noPlayer: true,
+  token: 'YOUR_TOKEN_HERE', // Required - haxball.com/headlesstoken
 });
+
+room.setDefaultStadium('Big');
+room.setScoreLimit(5);
+room.setTimeLimit(0);
+
+room.onRoomLink = function (link) {
+  console.log(link);
+};
 ```
 
 #### (Optional) Custom WebRTC Library
 
-Haxball.JS uses `node-datachannel` as the default WebRTC library. However, you can use a custom WebRTC implementation by specifying it in the HaxballJS promise using the `webrtc` option.
+Haxball.JS uses `@mertushka/node-datachannel` as the default WebRTC library. However, you can use a alternative WebRTC implementation by specifying it in the `RoomConfig` using the `webrtc` option.
 
 Example:
 
 ```js
-const HaxballJS = require('haxball.js');
 const WebRTC = require('webrtc');
 
-HaxballJS({ webrtc: WebRTC }).then((HBInit) => {...});
+const room = await HBInit({
+  ...
+  webrtc: WebRTC, // Optional
+});
 ```
 
 #### (Optional) Proxy
 
-Haxball has a limit of 2 rooms per IP. Therefore, you can use proxy with adding `proxy: "http://<YOUR_PROXY_IP>"` in your `RoomConfig`.
+Haxball has a limit of 2 public rooms per IP. Therefore, you can use proxy with adding `proxy: "http://host:port"` in your `RoomConfig`.
 
 Example:
 
 ```js
-HBInit({
+const room = await HBInit({
     ...
-    proxy: "http://1.1.1.1:80",
+    proxy: "http://1.1.1.1:80", // Optional
 });
 ```
 
 ### 💻 TypeScript
 
+Haxball.JS includes built-in TypeScript definitions for full type safety and IntelliSense support.
+
 #### TypeScript Example
 
 ```js
-import HaxballJS from 'haxball.js';
+import { HBInit } from 'haxball.js';
 
-HaxballJS().then((HBInit) => {...});
+const room = await HBInit({
+  roomName: 'Haxball.JS',
+  maxPlayers: 16,
+  public: true,
+  noPlayer: true,
+  token: 'YOUR_TOKEN_HERE', // Required - haxball.com/headlesstoken
+});
+
+room.setDefaultStadium('Big');
+room.setScoreLimit(5);
+room.setTimeLimit(0);
+
+room.onRoomLink = function (link) {
+  console.log(link);
+};
 ```
 
 #### 💻 (Optional, Highly Experimental!) Bun
@@ -96,7 +111,7 @@ It's highly experimental and risky to use it in a production environment, but `h
 
 ```bash
 bun install haxball.js
-bun pm trust node-datachannel
+bun pm trust @mertushka/node-datachannel
 bun index.ts
 ```
 
@@ -104,7 +119,7 @@ bun index.ts
 
 <h2 id="technologies">🚀 Technologies</h2>
 
-- node-datachannel - WebRTC implementation for Node.JS
+- @mertushka/node-datachannel - WebRTC implementation for Node.JS, optimized to use with haxball.js
 - ws - Websocket Connection
 - json5 - JSON Helper Module
 - @peculiar/webcrypto - WebCrypto implementation for Node.JS
@@ -120,7 +135,7 @@ bun index.ts
 <h2 id="minimal-requirements">🌱 Minimal Requirements</h2>
 
 - NPM
-- NodeJS Version >=18
+- Node.JS Version >= 18
 
 [Back To The Top](#title)
 
@@ -173,7 +188,7 @@ bun index.ts
 
 <h2 id="license">🔏 License</h2>
 
-Copyright © 2023 mertushka & basro
+Copyright © 2025 Mertushka and Mario Carbajal
 
 This project is licensed by [MIT License](https://api.github.com/licenses/mit).
 
