@@ -12,11 +12,10 @@ describe('HBInit Tests', function () {
     await delay(5000);
   });
 
-  (process.env.CI_HB_HEADLESS_TOKEN || process.env.TEST_HB_HEADLESS_TOKEN
-    ? it
-    : it.skip)('should create room', async function (done) {
+  it('should create room', async function () {
     this.timeout(30000);
     const { HBInit } = requireUncached('../build/index');
+
     let room = await HBInit({
       roomName: 'Haxball.JS',
       maxPlayers: 16,
@@ -24,38 +23,46 @@ describe('HBInit Tests', function () {
       noPlayer: true,
       debug: true,
       token:
-        process.env.CI_HB_HEADLESS_TOKEN || process.env.TEST_HB_HEADLESS_TOKEN, // Fallback for local testing
+        process.env.CI_HB_HEADLESS_TOKEN || process.env.TEST_HB_HEADLESS_TOKEN,
     });
 
-    room.onRoomLink = function () {
-      done();
-    };
+    return new Promise((resolve) => {
+      room.onRoomLink = function () {
+        resolve();
+      };
+    });
   });
 
-  // Optional proxy test
   (process.env.CI_HB_PROXY || process.env.TEST_HB_PROXY ? it : it.skip)(
     'should create room (proxy)',
-    async function (done) {
+    async function () {
       this.timeout(30000);
 
-      if (process.env.CI_HB_PROXY == '1') return done(); // Skip since testing proxy on GitHub Actions is not practical, test this locally instead
+      if (process.env.CI_HB_PROXY == '1') {
+        // Skip this test if running in CI
+        this.skip();
+      }
 
       const { HBInit } = requireUncached('../build/index');
+
       let room = await HBInit({
         roomName: 'Haxball.JS',
         maxPlayers: 16,
         public: false,
         noPlayer: true,
         debug: true,
-        proxy: process.env.CI_HB_PROXY || process.env.TEST_HB_PROXY, // Fallback for local testing
         token:
           process.env.CI_HB_HEADLESS_TOKEN ||
-          process.env.TEST_HB_HEADLESS_TOKEN, // Fallback for local testing
+          process.env.TEST_HB_HEADLESS_TOKEN,
+
+        proxy: process.env.CI_HB_PROXY || process.env.TEST_HB_PROXY,
       });
 
-      room.onRoomLink = function () {
-        done();
-      };
+      return new Promise((resolve) => {
+        room.onRoomLink = function () {
+          resolve();
+        };
+      });
     }
   );
 });
