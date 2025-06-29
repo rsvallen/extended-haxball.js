@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: haxball-build
-          path: src/build.js
+          path: build/index.js
           retention-days: 7
 
   test:
@@ -115,7 +115,7 @@ jobs:
 
       - name: 🔄 Prepare Build
         run: |
-          mv src/build.js src/index.js
+          mv build/index.js src/index.js
           echo "✨ Build prepared for publishing"
 
       - name: 🚀 Create Pull Request
