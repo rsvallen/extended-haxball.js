@@ -14,15 +14,16 @@ var promiseResolve;
 var proxyAgent;
 var debug = false;
 
-const HBLoaded = (config) => {
+const HBInit = async (config) => {
   if(config?.webrtc) {
     RTCPeerConnection = config.webrtc.RTCPeerConnection;
     RTCIceCandidate = config.webrtc.RTCIceCandidate;
     RTCSessionDescription = config.webrtc.RTCSessionDescription;
   }
-  return new Promise(function (resolve, reject) {
-  promiseResolve = resolve;
+  const HBInitProxy = await new Promise(function (resolve, reject) {
+    promiseResolve = resolve;
   });
+  return HBInitProxy(config);
 }
 
 const onHBLoaded = function (cb) {
@@ -172,4 +173,4 @@ ordered:!1},{name:"uu",reliable:!1,ordered:!1}];T.hg="application/x-www-form-url
 delay:!1});Fa.U=m.Z({ca:!1,delay:!1});aa.U=m.Z({ca:!1,delay:!1});V.U=m.Z({ca:!1,delay:!1,td:{pd:10,wd:2E3}});qa.U=m.Z({ca:!1,delay:!1});pa.U=m.Z({ca:!1,delay:!1});Z.U=m.Z({ca:!1,delay:!1});fa.U=m.Z({ca:!1,delay:!1});oa.U=m.Z({});la.U=m.Z({ca:!1,delay:!1,td:{pd:10,wd:900}});Ca.U=m.Z({});Ba.U=m.Z({ca:!1,delay:!1});S.U=m.Z({ca:!1,delay:!1});da.U=m.Z({ca:!1,delay:!1});M.U=m.Z({ca:!1,delay:!1});M.Xf=new Float32Array(1);M.$f=new Int32Array(1);ea.U=m.Z({ca:!1,delay:!1});ma.U=m.Z({ca:!1,delay:!1});na.U=m.Z({ca:!1,
 delay:!1});ca.U=m.Z({ca:!1,delay:!1});E.jg=.17435839227423353;E.ig=5.934119456780721;F.sh()})("undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this);
 
-module.exports = HBLoaded;
+module.exports = {HBInit};

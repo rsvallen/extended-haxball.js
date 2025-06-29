@@ -24,7 +24,7 @@ async function nodeify() {
     source = processSource(source);
 
     // Write output
-    const outputPath = path.join(__dirname, '../src/build.js');
+    const outputPath = path.join(__dirname, '../build/index.js');
     await writeOutputFile(outputPath, source);
 
     console.log(`SUCCESS:${hash}`); // Special format for GitHub Actions
@@ -154,15 +154,16 @@ var promiseResolve;
 var proxyAgent;
 var debug = false;
 
-const HBLoaded = (config) => {
+const HBInit = async (config) => {
   if(config?.webrtc) {
     RTCPeerConnection = config.webrtc.RTCPeerConnection;
     RTCIceCandidate = config.webrtc.RTCIceCandidate;
     RTCSessionDescription = config.webrtc.RTCSessionDescription;
   }
-  return new Promise(function (resolve, reject) {
-  promiseResolve = resolve;
+  const HBInitProxy = await new Promise(function (resolve, reject) {
+    promiseResolve = resolve;
   });
+  return HBInitProxy(config);
 }
 
 const onHBLoaded = function (cb) {
@@ -173,7 +174,7 @@ const onHBLoaded = function (cb) {
 
 `;
 
-  const footer = `\nmodule.exports = HBLoaded;`;
+  const footer = `\nmodule.exports = {HBInit};`;
 
   return header + source + footer;
 }
