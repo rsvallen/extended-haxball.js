@@ -39,7 +39,7 @@ describe('HBInit Tests', function () {
       this.timeout(30000);
 
       if (process.env.CI_HB_PROXY == '1') {
-        // Skip this test if running in CI
+        // Skip this test if running in CI without a proxy
         this.skip();
       }
 
