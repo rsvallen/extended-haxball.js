@@ -78,7 +78,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: haxball-build
-          path: src
+          path: build
 
       - name: 📥 Install Dependencies
         run: npm ci
@@ -111,7 +111,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: haxball-build
-          path: src
+          path: build
 
       - name: 🔄 Prepare Build
         run: |
