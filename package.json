@@ -1,7 +1,7 @@
 {
-  "name": "haxball.js",
+  "name": "@rafasvallen/extended-haxball.js",
   "version": "3.2.1",
-  "description": "A powerful library for interacting with the Haxball Headless API",
+  "description": "A custom modded version of the haxball.js library for interacting with the Haxball Headless API",
   "main": "src/index.js",
   "types": "types/index.d.ts",
   "engines": {
@@ -17,7 +17,7 @@
     "bot",
     "room"
   ],
-  "author": "mertushka",
+  "author": "rsvallen",
   "license": "MIT",
   "dependencies": {
     "@mertushka/node-datachannel": "^0.35.0",
@@ -35,12 +35,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mertushka/haxball.js.git"
+    "url": "git+https://github.com/rsvallen/extended-haxball.js.git"
   },
   "bugs": {
-    "url": "https://github.com/mertushka/haxball.js/issues"
+    "url": "https://github.com/rsvallen/extended-haxball.js/issues"
   },
-  "homepage": "https://github.com/mertushka/haxball.js#readme",
+  "homepage": "https://github.com/rsvallen/extended-haxball.js#readme",
   "trustedDependencies": [
     "node-datachannel"
   ]
