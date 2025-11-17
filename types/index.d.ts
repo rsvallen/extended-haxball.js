@@ -123,7 +123,6 @@ declare class RoomObject {
 
   CollisionFlags: CollisionFlagsObject;
 
-  onPlayerRankChange(player): void;
   onPlayerJoin(player: PlayerObject): void;
 
   onPlayerLeave(player: PlayerObject): void;
