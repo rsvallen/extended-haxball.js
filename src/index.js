@@ -3484,6 +3484,22 @@ const onHBLoaded = function (cb) {
             let h = y.D;
             return null == h ? 0 : h.ia.A.length;
           },
+          // ADDED: getInputObject method.
+          getInputObject: function (h) {
+            let n = y.R(h); // Get the internal player object by ID
+            if (null == n) return null; // Player not found
+            
+            let v = n.Jb; // This is the integer bitmask for the player's inputs
+            
+            // Decode the bitmask into a boolean map
+            return {
+              up: 0 != (v & 1),
+              down: 0 != (v & 2),
+              left: 0 != (v & 4),
+              right: 0 != (v & 8),
+              kick: 0 != (v & 16),
+            };
+          },
           startRecording: function () {
             eb = new Wa(D, 3);
           },
