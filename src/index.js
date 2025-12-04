@@ -3618,11 +3618,20 @@ const onHBLoaded = function (cb) {
         let h = J.onPositionsReset;
         null != h && h();
       };
-      y.uf = function (h) {
-        {
-          let n = J.onPlayerActivity;
-          null != n && n(f(h));
-        }
+      y.uf = function (h, n) { // h = internal player, n = input bitmask
+        // 1. Trigger existing onPlayerActivity
+        let v = J.onPlayerActivity;
+        null != v && v(f(h));
+
+        // 2. Trigger new onPlayerInput
+        v = J.onPlayerInput;
+        null != v && v(f(h), {
+          up: 0 != (n & 1),
+          down: 0 != (n & 2),
+          left: 0 != (n & 4),
+          right: 0 != (n & 8),
+          shoot: 0 != (n & 16)
+        });
       };
       y.Hf = function (h, n) {
         let v = J.onStadiumChange;

@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "haxball.js",
+      "name": "extended-haxball.js",
       "dependencies": {
         "@mertushka/node-datachannel": "^0.35.0",
         "@peculiar/webcrypto": "^1.5.0",
