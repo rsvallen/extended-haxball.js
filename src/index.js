@@ -3500,6 +3500,64 @@ const onHBLoaded = function (cb) {
               kick: 0 != (v & 16),
             };
           },
+          // ADDED: resetPositions method.
+          resetPositions: function () {
+            if (null == y.D) return; // Game not running
+
+            // 1. Reset Discs (Balls and obstacles) to stadium defaults
+            var stadiumDiscs = y.ea.A;
+            for (var i = 0; i < stadiumDiscs.length; i++) {
+              var template = stadiumDiscs[i];
+              c(M.ag(i, false, {
+                x: template.a.x,
+                y: template.a.y,
+                xspeed: template.u.x,
+                yspeed: template.u.y,
+                xgravity: template.la.x,
+                ygravity: template.la.y,
+                invMass: template.L,
+                damping: template.ga,
+                bCoeff: template.i
+              }));
+            }
+
+            // 2. Reset Players to spawn points
+            var redCount = 0;
+            var blueCount = 0;
+            var players = y.ba;
+
+            for (var i = 0; i < players.length; i++) {
+              var p = players[i];
+              if (p.ja == u.na) continue; // Skip spectators
+
+              var isRed = p.ja == u.fa;
+              var count = isRed ? redCount++ : blueCount++;
+              var spawnPoints = isRed ? y.ea.Pb : y.ea.Ib;
+              var targetX, targetY;
+
+              if (spawnPoints.length > 0) {
+                // Use custom spawn points
+                var idx = count;
+                if (idx >= spawnPoints.length) idx = spawnPoints.length - 1; // Clamp to last spawn
+                targetX = spawnPoints[idx].x;
+                targetY = spawnPoints[idx].y;
+              } else {
+                // Use default spawn logic (from Q.af)
+                var l = (count + 1) >> 1;
+                if ((count & 1) == 0) l = -l;
+                targetX = y.ea.Ma * p.ja.Qe; // SpawnDistance * TeamDirection
+                targetY = 55 * l;
+              }
+
+              // Send action to move player
+              c(M.ag(p.ma, true, {
+                x: targetX,
+                y: targetY,
+                xspeed: 0,
+                yspeed: 0
+              }));
+            }
+          },
           startRecording: function () {
             eb = new Wa(D, 3);
           },
