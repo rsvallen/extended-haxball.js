@@ -3484,6 +3484,27 @@ const onHBLoaded = function (cb) {
             let h = y.D;
             return null == h ? 0 : h.ia.A.length;
           },
+          // --- START OF CHANGES ---
+          // Returns the internal live Player Object (Aa).
+          // Use this for high-performance reading. 
+          // Properties: .ma (id), .oa (name), .ja.S (team), .N (disc object)
+          getPlayerReference: function (h) {
+            return y.R(h);
+          },
+
+          // Returns the internal live Disc Object (ha/xa).
+          // Properties: .a.x/.a.y (pos), .u.x/.u.y (speed), .M (radius)
+          getDiscReference: function (h) {
+            let n = y.D; // y.D is the Game Simulation (Q)
+            // n.ia is Disc Manager (Qa), .A is the Array of discs
+            return null == n ? null : n.ia.A[h];
+          },
+
+          // Quick access to the ball (Disc 0)
+          getBallReference: function () {
+             let n = y.D;
+             return null == n ? null : n.ia.A[0];
+          },
           // ADDED: getInputObject method.
           getInputObject: function (h) {
             let n = y.R(h); // Get the internal player object by ID
